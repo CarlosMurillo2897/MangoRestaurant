@@ -32,5 +32,75 @@ namespace Mango.Services.ProductAPI.Controllers
             }
             return _response;
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<object> Get(int id)
+        {
+            try
+            {
+                ProductDTO productDTO = await _productRepository.GetProductById(id);
+                _response.Result = productDTO;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw;
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        public async Task<object> Post([FromBody] ProductDTO productDTO)
+        {
+            try
+            {
+                ProductDTO model = await _productRepository.CreateUpdateProduct(productDTO);
+                _response.Result = model;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw;
+            }
+            return _response;
+        }
+
+        [HttpPut]
+        public async Task<object> Put([FromBody] ProductDTO productDTO)
+        {
+            try
+            {
+                ProductDTO model = await _productRepository.CreateUpdateProduct(productDTO);
+                _response.Result = model;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw;
+            }
+            return _response;
+        }
+
+        [HttpDelete]
+        public async Task<object> Delete(int id)
+        {
+            try
+            {
+                bool isSuccess = await _productRepository.DeleteProduct(id);
+                _response.Result = isSuccess;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw;
+            }
+            return _response;
+        }
+
     }
 }
